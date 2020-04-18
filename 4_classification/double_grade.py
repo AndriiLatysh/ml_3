@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import sklearn.linear_model as lm
 import sklearn.metrics as sm
 import sklearn.model_selection as ms
+import joblib
 
 
 def plot_model(model, qualifies_double_grade_df):
@@ -54,5 +55,18 @@ print(qualification_model.coef_)
 print(qualification_model.intercept_)
 
 plot_model(qualification_model, qualifies_double_grade_df)
+
+plt.clf()
+
+plt.xlabel("False positive rate")
+plt.ylabel("True positive rate")
+
+false_positive_rate, true_positive_rate, thresholds = sm.roc_curve(y, modeled_qualification_probabilities)
+plt.plot(false_positive_rate, true_positive_rate)
+
+roc_auc = sm.roc_auc_score(y, modeled_qualification_probabilities)
+print("Area under curve: {}".format(roc_auc))
+
+joblib.dump(qualification_model, "models/qualification_by_two_grades_model.joblib")
 
 plt.show()
