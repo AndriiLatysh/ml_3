@@ -6,3 +6,4 @@
 **/*.cfg
 **/log/*.log
 **/python*/
+**/homework*
